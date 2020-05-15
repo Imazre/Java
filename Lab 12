@@ -8,8 +8,7 @@ static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
         Benchmark.single();
-        System.out.println(Benchmark.array);
-        sc.nextLine();
+        System.out.println(Benchmark.array + "\n======================");
         Benchmark.d0uble();
     }
 }
@@ -22,10 +21,11 @@ class SecondThread extends Thread {
     }
 
     public float[] smth(float[] array, int number) {
-        float[] output = new float[number];
+        float[] output;
+        output = array;
         int i = 0;
-        while(i+1 < array.length) {
-            array[i] = (float) (array[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + 1 / 2));
+        while(i+1 < output.length) {
+            output[i] = (float) (output[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + 1 / 2));
             i++;
         }
         return output;
