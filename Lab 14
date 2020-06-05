@@ -1,0 +1,100 @@
+package com.company;
+
+import java.awt.*;
+import java.awt.event.*;
+
+public class Main extends Frame implements ActionListener{
+    TextField t1, t2, t3;
+    Label l1, l2;
+    Button calc, clear;
+    KeyAdapter num = new KeyAdapter() {
+        public void keyTyped(KeyEvent e) {
+            char c = e.getKeyChar();
+            if (!(Character.isDigit(c) ||
+                    (c == KeyEvent.VK_BACK_SPACE) ||
+                    (c == KeyEvent.VK_DELETE))) {
+                e.consume();
+            }
+        }
+    };
+
+    public Main(String name) {
+        super(name);
+        setLayout(null);
+        setResizable(false);
+        setBackground(Color.lightGray);
+
+        t1 = new TextField();
+        t1.setLocation(150, 75);
+        t1.setSize(100, 25);
+        t1.addKeyListener(num);
+        t2 = new TextField();
+        t2.setLocation(150, 125);
+        t2.setSize(100, 25);
+        t2.addKeyListener(num);
+        t3 = new TextField();
+        t3.setLocation(150, 175);
+        t3.setSize(100, 25);
+        t3.setBackground(Color.gray);
+        t3.setEditable(false);
+
+        l1 = new Label("+");
+        l1.setLocation(200, 100);
+        l1.setSize(25, 25);
+        l2 = new Label("=");
+        l2.setLocation(200, 150);
+        l2.setSize(25, 25);
+
+        calc = new Button("Calculate");
+        calc.setLocation(200, 225);
+        calc.setSize(100, 25);
+        calc.addActionListener(this);
+        clear = new Button("Clear");
+        clear.setLocation(75, 225);
+        clear.setSize(100, 25);
+        clear.addActionListener(this);
+
+        add(t1);
+        add(t2);
+        add(t3);
+        add(l1);
+        add(l2);
+        add(calc);
+        add(clear);
+
+        setSize(400, 300);
+        setVisible(true);
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent ev) {
+                System.exit(0);
+            }
+        });
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        if(ae.getActionCommand().equals("Calculate")) {
+            try {
+                int a = Integer.parseInt(t1.getText());
+                int b = Integer.parseInt(t2.getText());
+                int c = a + b;
+                t3.setText(String.valueOf(c));
+            }
+            catch (NumberFormatException nf) {
+                t1.setText("");
+                t2.setText("");
+                t3.setText("Ошибка!");
+            }
+        }
+        else {
+            t1.setText("");
+            t2.setText("");
+            t3.setText("");
+        }
+    }
+
+    public static void main(String[] args){
+        new Main("СКЛАДЫВАТЕЛЬ-9000");
+    }
+}
